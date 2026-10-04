@@ -18,7 +18,10 @@ class ContractTests(unittest.TestCase):
     def test_proficiency_claim_is_rejected(self):
         path=ROOT/"fixtures"/"bad.json"
         data=json.loads((ROOT/"fixtures"/"tones-context.json").read_text()); data["proficiency_score"]=99; path.write_text(json.dumps(data))
-        try: with self.assertRaises(ValueError): load(path)
-        finally: path.unlink()
+        try:
+            with self.assertRaises(ValueError):
+                load(path)
+        finally:
+            path.unlink()
 
 if __name__ == "__main__": unittest.main()
