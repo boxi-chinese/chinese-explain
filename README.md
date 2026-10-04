@@ -1,25 +1,30 @@
 # chinese-explain
 
-面向中文学习的可执行解释：把语境、汉字、拼音、声调、产出、反馈和修订放进同一个可检查的学习单元。
-
-> **Status:** scaffold. The public lesson contract and first MVP are being designed.
-
-## Scope
-
-`chinese-explain` will provide a versioned lesson bundle, text-first playback, optional audio/character layers, inspectable feedback, and static export. It must support Chinese-specific learning objects without reducing learning to a single score.
-
-Initial MVP scenes:
-
-1. tones and pronunciation in context;
-2. word order, aspect, and meaning;
-3. dialogue repair and pragmatic fit.
-
-## Learning loop
+This MVP provides a text-first Chinese lesson contract and an inspectable offline flow:
 
 ```text
-语境 → 预测 → 输入 → 产出 → 对比反馈 → 修订 → 迁移
+语境 -> 输入 -> 产出 -> 分维度反馈 -> 修订 -> 迁移
 ```
 
-## Repository boundaries
+Validate a lesson:
 
-This repository owns reusable lesson schemas, alignment and feedback primitives. Public learning content lives in `boxi-chinese/chinese-scenarios`; the site is a separate presentation layer. Personal learner data, private class records, and proficiency claims do not belong here.
+```text
+PYTHONPATH=src python -m chinese_explain validate fixtures/tones-context.json
+```
+
+Run a lesson flow:
+
+```text
+PYTHONPATH=src python -m chinese_explain run fixtures/tones-context.json \
+  --response "买米" \
+  --revised-response "我想买米。" \
+  --transfer-response "我去市场买水果。"
+```
+
+Run tests without network dependencies:
+
+```text
+PYTHONPATH=src python -m unittest discover -s tests -p 'test_*.py'
+```
+
+The MVP deliberately avoids accounts, speech recognition, learner data, opaque scoring, and proficiency claims.
