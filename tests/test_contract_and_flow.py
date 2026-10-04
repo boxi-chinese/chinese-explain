@@ -8,7 +8,7 @@ ROOT=Path(__file__).parents[1]
 
 class ContractTests(unittest.TestCase):
     def test_valid_lessons_and_stable_flow(self):
-        for name in ("tones-context.json", "word-order-context.json"):
+        for name in ("tones-context.json", "word-order.json"):
             path=ROOT/"fixtures"/name
             lesson=load(path)
             result=run(path,"我的回答","我的修订","我的迁移")
